@@ -640,64 +640,58 @@
     <div class="slide-label">Silvia Barrientos — Backend</div>
     <h2 class="slide-title">Implementación <span class="accent">Técnica</span></h2>
     <p class="slide-body" style="font-size:0.6rem; margin-bottom:0.3rem;">
-      PostgreSQL con lógica de negocio centralizada en Triggers SQL. Arquitectura de lógica concentrada en BD para consistencia transaccional.
+      PostgreSQL con lógica de negocio centralizada. Arquitectura que aplica tanto a <strong style="color:#32ff7e;">ventas</strong> como a <strong style="color:#60a5fa;">compras</strong> con el mismo motor de prorrateo de cuotas.
     </p>
     <div class="two-col">
       <div class="arch-box">
         <h4>🗄️ Diagrama de Base de Datos</h4>
         <div class="db-box">
-          <div class="tbl"><div class="th" style="background:rgba(50,255,126,0.08);color:#32ff7e;">CLIENTES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">razon_social</div><div class="td">ruc, direccion</div><div class="td">telefono, activo</div></div>
-          <div class="tbl"><div class="th" style="background:rgba(255,0,128,0.08);color:#ff0080;">VENTAS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK cliente_id</div><div class="td" style="color:#60a5fa;">FK plazo_id</div><div class="td">total_factura</div><div class="td">tipo_doc_id</div><div class="td">moneda_id</div><div class="td">serie, nro_factura</div></div>
-          <div class="tbl"><div class="th" style="background:rgba(96,165,250,0.08);color:#60a5fa;">PLAZOS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">plazo, cuotas</div><div class="td" style="color:#ff0080;">FK tipo_id</div><div class="td">irregular</div><div class="td">activo</div></div>
-          <div class="tbl"><div class="th" style="background:rgba(251,191,36,0.08);color:#fbbf24;">PLAZO_DETALLES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK plazo_id</div><div class="td">cuota, dias</div><div class="td">porcentaje</div></div>
-          <div class="tbl"><div class="th" style="background:rgba(167,139,250,0.08);color:#a78bfa;">CUENTAS_COBRAR</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK venta_id</div><div class="td">importe, saldo</div><div class="td">nro_cuota, vence</div><div class="td">cobrado, estado</div></div>
-          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">TIPOS_DOC</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">descripcion</div><div class="td">codigo (CO/CR)</div></div>
-          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">MONEDAS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">descripcion</div><div class="td">abreviatura</div></div>
-          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">DEPOSITOS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">descripcion</div><div class="td">activo</div></div>
+          <div class="tbl"><div class="th" style="background:rgba(50,255,126,0.08);color:#32ff7e;">CLIENTES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">razon_social</div><div class="td">ruc, direccion</div></div>
+          <div class="tbl"><div class="th" style="background:rgba(255,0,128,0.08);color:#ff0080;">VENTAS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK cliente_id</div><div class="td" style="color:#60a5fa;">FK plazo_id</div><div class="td">total_factura</div><div class="td">tipo_doc_id</div></div>
+          <div class="tbl"><div class="th" style="background:rgba(251,191,36,0.08);color:#fbbf24;">CUENTAS_COBRAR</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK venta_id</div><div class="td">importe, saldo</div><div class="td">vence, estado</div></div>
+          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">PROVEEDORES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">ruc, direccion</div><div class="td">activo</div></div>
+          <div class="tbl"><div class="th" style="background:rgba(96,165,250,0.08);color:#60a5fa;">COMPRAS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK proveedor_id</div><div class="td">total, tipo_doc_id</div><div class="td">serie, nro_factura</div></div>
+          <div class="tbl"><div class="th" style="background:rgba(167,139,250,0.08);color:#a78bfa;">CUENTAS_PAGAR</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK compra_id</div><div class="td">importe, saldo</div><div class="td">vence, estado</div></div>
+          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">PLAZOS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">plazo, cuotas</div><div class="td">irregular, activo</div></div>
+          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">PLAZO_DETALLES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">cuota, dias</div><div class="td">porcentaje</div></div>
+          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">TIPOS_DOC</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">codigo CO/CR</div></div>
         </div>
-        <div style="font-size:0.4rem; color:#475569; text-align:center; margin-top:0.15rem;">CLIENTES → VENTAS (1:N) · TIPOS_DOC → PLAZOS (1:N) · PLAZOS → PLAZO_DETALLES (1:N) · VENTAS → CUENTAS_COBRAR (1:N)</div>
+        <div style="font-size:0.4rem; color:#475569; text-align:center; margin-top:0.15rem;">CLIENTES → VENTAS → CUENTAS_COBRAR · PROVEEDORES → COMPRAS → CUENTAS_PAGAR · PLAZOS → PLAZO_DETALLES</div>
       </div>
       <div class="arch-box">
-        <h4>⚡ Lógica del Trigger <code style="color:#ff0080;">ins_ventas</code></h4>
-        <div class="code-block"><span class="kw">function</span> <span class="fn">simulateCuentasCobrarTrigger</span>(venta) {
-  <span class="cm">// 1. Validar coherencia tipo doc vs plazo</span>
-  <span class="kw">if</span> (tipoDoc === CO &amp;&amp; plazo !== contado)
-    <span class="kw">throw</span> <span class="str">'Tipo doc y plazo no coinciden.'</span>;
+        <h4>⚡ Motor de Cuotas <code style="color:#ff0080;">calcularCuotasPreview</code></h4>
+        <div class="code-block"><span class="kw">function</span> <span class="fn">calcularCuotasPreview</span>(total, tipoDoc, plazo, detalles) {
+  <span class="cm">// 1. Contado → 1 cuota, 100%, vence hoy</span>
+  <span class="kw">if</span> (tipoDoc === CO)
+    <span class="kw">return</span> [{ cuota: 1, importe: total, vence: hoy }];
 
-  <span class="cm">// 2. Según el plazo, genera las cuotas</span>
-  <span class="kw">if</span> (plazo === contado)
-    1 cuota, 100%, vence = fechaFactura
+  <span class="cm">// 2. Crédito → según plazo</span>
+  <span class="kw">if</span> (plazo.irregular)
+    <span class="cm">// Usa % de plazo_detalles (45%/55%)</span>
+    <span class="kw">return</span> cuotas con importe = total × %;
+  <span class="kw">else</span>
+    <span class="cm">// Regular: TRUNCATE + última ajustada</span>
+    importeCuota = TRUNCATE(total / nCuotas);
+    últimaCuota = total - (importeCuota × (nCuotas-1));
+    <span class="kw">return</span> cuotas con vencimiento espaciado;
 
-  <span class="kw">else if</span> (plazo === credito30)
-    1 cuota, 100%, vence = fechaFactura + 30d
-
-  <span class="kw">else if</span> (plazo === regular)
-    importeCuota = TRUNCATE(total / 3)
-    últimaCuota = total - (importeCuota × 2)
-    vencimientos: 30/60/90 días
-
-  <span class="kw">else if</span> (plazo === irregular)
-    1ra cuota = total × 45%
-    2da cuota = total × 55%
-    vencimientos: 45/75 días
-
-  <span class="cm">// 3. Suma de cuotas = total exacto (sin pérdida decimal)</span>
-  <span class="kw">return</span> cuotasGeneradas;
+  <span class="cm">// 3. Suma de cuotas = total exacto</span>
 }</div>
         <div style="margin-top:0.2rem; display:flex; gap:0.2rem; flex-wrap:wrap;">
-          <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(50,255,126,0.05); border:1px solid rgba(50,255,126,0.1); color:#32ff7e;">✓ Coherencia tipo doc vs plazo</span>
+          <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(50,255,126,0.05); border:1px solid rgba(50,255,126,0.1); color:#32ff7e;">✓ Lógica compartida ventas + compras</span>
           <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(255,0,128,0.05); border:1px solid rgba(255,0,128,0.1); color:#ff0080;">✓ TRUNCATE sin pérdida decimal</span>
           <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(96,165,250,0.05); border:1px solid rgba(96,165,250,0.1); color:#60a5fa;">✓ Regular e irregular</span>
+          <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.1); color:#fbbf24;">✓ Previsualización antes de confirmar</span>
         </div>
       </div>
     </div>
     <div class="section-divider"></div>
     <div class="arch-flow">
       <div class="step s1">📝 Formulario React</div><div class="arrow">→</div>
-      <div class="step s2">📤 INSERT en VENTAS</div><div class="arrow">→</div>
-      <div class="step s3">⚡ Trigger AFTER INSERT</div><div class="arrow">→</div>
-      <div class="step s1">📊 Genera CUENTAS_COBRAR</div><div class="arrow">→</div>
-      <div class="step s2">👁️ Consulta vista SQL</div>
+      <div class="step s2">🔍 Previsualización</div><div class="arrow">→</div>
+      <div class="step s3">💾 INSERT VENTAS/COMPRAS</div><div class="arrow">→</div>
+      <div class="step s1">📊 CUENTAS x Cobrar/Pagar</div><div class="arrow">→</div>
+      <div class="step s2">💰 Cobro / Pago + Saldo</div>
     </div>
   </div>
   <div class="slide-number">05 <strong>/ 07</strong></div>
