@@ -481,7 +481,7 @@
       </div>
       <div class="org-line"></div>
       <div class="org-bracket">
-        <div style="font-size:0.4rem; color:#475569; text-transform:uppercase; letter-spacing:0.1em; text-align:center; margin-bottom:0.2rem;">Supervisa directamente</div>
+        <div style="color:#475569; text-transform:uppercase; letter-spacing:0.1em; text-align:center; margin-bottom:0.2rem;">Supervisa directamente</div>
         <div class="org-row">
           <div class="org-node sub" style="border-color:rgba(96,165,250,0.12); background:rgba(96,165,250,0.02);">
             <span style="font-size:0.8rem;">🎨</span> Alejandro Acosta<br>
@@ -568,12 +568,12 @@
           </div>
           <div style="background:rgba(251,191,36,0.03); border:1px solid rgba(251,191,36,0.08); border-radius:6px; padding:0.25rem 0.4rem;">
             <div style="font-weight:700; color:#fbbf24;">+ Offline</div>
-            <div style="font-size:0.48rem; color:#94a3b8;">Modo desconectado con respaldo en localStorage</div>
+            <div style="color:#94a3b8;">Modo desconectado con respaldo en localStorage</div>
           </div>
         </div>
 
         <div>
-          <div style="font-size:0.48rem; font-weight:600; color:#475569; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.2rem;">Stack Tecnológico</div>
+          <div style="font-weight:600; color:#475569; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.2rem;">Stack Tecnológico</div>
           <div class="tech-stack">
             <span class="tech" style="border-color:rgba(96,165,250,0.12);color:#60a5fa;">React 19</span>
             <span class="tech" style="border-color:rgba(96,165,250,0.12);color:#60a5fa;">TypeScript</span>
@@ -650,42 +650,42 @@
       <div class="arch-box">
         <h4>🗄️ Diagrama de Base de Datos</h4>
         <div class="db-box">
-          <div class="tbl"><div class="th" style="background:rgba(50,255,126,0.08);color:#32ff7e;">CLIENTES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">razon_social</div><div class="td">ruc, direccion</div></div>
+          <div class="tbl"><div class="th" style="background:rgba(50,255,126,0.08);color:#32ff7e;">CLIENTES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">ruc, direccion</div><div class="td">telefono, activo</div></div>
           <div class="tbl"><div class="th" style="background:rgba(255,0,128,0.08);color:#ff0080;">VENTAS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK cliente_id</div><div class="td" style="color:#60a5fa;">FK plazo_id</div><div class="td">total_factura</div><div class="td">tipo_doc_id</div></div>
           <div class="tbl"><div class="th" style="background:rgba(251,191,36,0.08);color:#fbbf24;">CUENTAS_COBRAR</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK venta_id</div><div class="td">importe, saldo</div><div class="td">vence, estado</div></div>
-          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">PROVEEDORES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">ruc, direccion</div><div class="td">activo</div></div>
+          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">PROVEEDORES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">ruc, direccion</div><div class="td">telefono, activo</div></div>
           <div class="tbl"><div class="th" style="background:rgba(96,165,250,0.08);color:#60a5fa;">COMPRAS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK proveedor_id</div><div class="td">total, tipo_doc_id</div><div class="td">serie, nro_factura</div></div>
           <div class="tbl"><div class="th" style="background:rgba(167,139,250,0.08);color:#a78bfa;">CUENTAS_PAGAR</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK compra_id</div><div class="td">importe, saldo</div><div class="td">vence, estado</div></div>
           <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">PLAZOS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">plazo, cuotas</div><div class="td">irregular, activo</div></div>
           <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">PLAZO_DETALLES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">cuota, dias</div><div class="td">porcentaje</div></div>
           <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">TIPOS_DOC</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">codigo CO/CR</div></div>
         </div>
-        <div style="font-size:0.4rem; color:#475569; text-align:center; margin-top:0.15rem;">CLIENTES → VENTAS → CUENTAS_COBRAR · PROVEEDORES → COMPRAS → CUENTAS_PAGAR · PLAZOS → PLAZO_DETALLES</div>
+        <div style="color:#475569; text-align:center; margin-top:0.15rem;">CLIENTES → VENTAS → CUENTAS_COBRAR · PROVEEDORES → COMPRAS → CUENTAS_PAGAR · PLAZOS → PLAZO_DETALLES</div>
       </div>
       <div class="arch-box">
         <h4>⚡ Motor de Cuotas <code style="color:#ff0080;">calcularCuotasPreview</code></h4>
-        <div class="code-block"><span class="kw">function</span> <span class="fn">calcularCuotasPreview</span>(total, tipoDoc, plazo, detalles) {
+        <div class="code-block"><span class="kw">function</span> <span class="fn">calcularCuotasPreview</span>(fechaFactura, total, tipoDoc, plazo, detalles) {
   <span class="cm">// 1. Contado → 1 cuota, 100%, vence hoy</span>
-  <span class="kw">if</span> (tipoDoc === CO)
-    <span class="kw">return</span> [{ cuota: 1, importe: total, vence: hoy }];
+  <span class="kw">if</span> (tipoDoc.codigo === CO)
+    <span class="kw">return</span> [{ cuota: 1, importe: total, vence: fechaFactura }];
 
-  <span class="cm">// 2. Crédito → según plazo</span>
-  <span class="kw">if</span> (plazo.irregular)
-    <span class="cm">// Usa % de plazo_detalles (45%/55%)</span>
-    <span class="kw">return</span> cuotas con importe = total × %;
-  <span class="kw">else</span>
-    <span class="cm">// Regular: TRUNCATE + última ajustada</span>
-    importeCuota = TRUNCATE(total / nCuotas);
-    últimaCuota = total - (importeCuota × (nCuotas-1));
-    <span class="kw">return</span> cuotas con vencimiento espaciado;
+  <span class="cm">// 2. Crédito → prorrateo exacto</span>
+  importeBase = Math.round(total / plazo.cuotas * 100) / 100;
 
-  <span class="cm">// 3. Suma de cuotas = total exacto</span>
+  <span class="kw">for</span> cada cuota:
+    importe = (última) ? Math.round((total - acumulado) * 100) / 100 : importeBase;
+    vence = (irregular) ? addDays(fechaFactura, detalle.dias)
+                        : addDays(fechaFactura, i × 30);
+    acumulado += importe;
+
+  <span class="cm">// 3. Suma siempre = total exacto (sin decimal perdido)</span>
+  <span class="kw">return</span> cuotas;
 }</div>
         <div style="margin-top:0.2rem; display:flex; gap:0.2rem; flex-wrap:wrap;">
-          <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(50,255,126,0.05); border:1px solid rgba(50,255,126,0.1); color:#32ff7e;">✓ Lógica compartida ventas + compras</span>
-          <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(255,0,128,0.05); border:1px solid rgba(255,0,128,0.1); color:#ff0080;">✓ TRUNCATE sin pérdida decimal</span>
-          <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(96,165,250,0.05); border:1px solid rgba(96,165,250,0.1); color:#60a5fa;">✓ Regular e irregular</span>
-          <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.1); color:#fbbf24;">✓ Previsualización antes de confirmar</span>
+          <span style="padding:0.06rem 0.35rem; border-radius:100px; background:rgba(50,255,126,0.05); border:1px solid rgba(50,255,126,0.1); color:#32ff7e;">✓ Lógica compartida ventas + compras</span>
+          <span style="padding:0.06rem 0.35rem; border-radius:100px; background:rgba(255,0,128,0.05); border:1px solid rgba(255,0,128,0.1); color:#ff0080;">✓ Math.round ×100/100 sin pérdida</span>
+          <span style="padding:0.06rem 0.35rem; border-radius:100px; background:rgba(96,165,250,0.05); border:1px solid rgba(96,165,250,0.1); color:#60a5fa;">✓ Regular (30/60/90) e irregular (días variables)</span>
+          <span style="padding:0.06rem 0.35rem; border-radius:100px; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.1); color:#fbbf24;">✓ Previsualización antes de confirmar</span>
         </div>
       </div>
     </div>
