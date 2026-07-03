@@ -8,7 +8,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; font-size: clamp(14px, 1.4vw, 20px); }
   body {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: #060b1a;
@@ -24,10 +24,18 @@
   .slide {
     width: 100%; min-height: 100vh;
     display: flex; flex-direction: column;
-    justify-content: center; padding: 2.5rem 4rem;
+    justify-content: center; padding: 3rem 4.5rem;
     position: relative; overflow: hidden;
     page-break-after: always; page-break-inside: avoid;
     opacity: 1;
+  }
+
+  @media (min-width: 1400px) {
+    .slide { padding: 3.5rem 6rem; }
+    .slide-content { max-width: 1300px; }
+  }
+  @media (max-width: 900px) {
+    .slide { padding: 2rem 2rem; }
   }
 
   .slide::before {
@@ -47,7 +55,7 @@
 
   .slide-number {
     position: absolute; bottom: 0.6rem; left: 1.5rem;
-    font-size: 0.5rem; font-weight: 600; color: rgba(255,255,255,0.12);
+    font-size: clamp(0.45rem, 0.55vw, 0.6rem); font-weight: 600; color: rgba(255,255,255,0.12);
     letter-spacing: 0.15em;
   }
   .slide-number strong { color: rgba(255,255,255,0.25); }
@@ -93,18 +101,18 @@
   .slide-cover .badge {
     display: inline-block; padding: 0.3rem 1.2rem;
     border: 1px solid rgba(50,255,126,0.2); border-radius: 100px;
-    font-size: 0.55rem; font-weight: 600; letter-spacing: 0.18em;
+    font-size: clamp(0.5rem, 0.65vw, 0.7rem); font-weight: 600; letter-spacing: 0.18em;
     text-transform: uppercase; color: #32ff7e; background: rgba(50,255,126,0.04);
   }
   .slide-cover h1 {
-    font-size: clamp(3rem, 5.5vw, 5rem); font-weight: 900; line-height: 1;
+    font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 900; line-height: 1;
     background: linear-gradient(135deg, #32ff7e 0%, #00e673 40%, #ff0080 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     letter-spacing: -0.02em;
   }
-  .slide-cover .subtitle { font-size: clamp(0.85rem, 1.3vw, 1.1rem); font-weight: 300; color: #94a3b8; max-width: 600px; }
+  .slide-cover .subtitle { font-size: clamp(0.85rem, 1.4vw, 1.2rem); font-weight: 300; color: #94a3b8; max-width: 600px; }
   .slide-cover .meta { display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
-  .slide-cover .meta span { font-size: 0.65rem; color: #64748b; }
+  .slide-cover .meta span { font-size: clamp(0.6rem, 0.7vw, 0.75rem); color: #64748b; }
   .slide-cover .meta strong { color: #cbd5e1; font-weight: 600; }
   .cover-line {
     width: 70px; height: 2.5px;
@@ -116,15 +124,15 @@
   .slide-section { background: linear-gradient(180deg, #060b1a 0%, #0a1628 100%); align-items: flex-start; }
   .slide-content { width: 100%; max-width: 1150px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
   .slide-label {
-    font-size: 0.55rem; font-weight: 700; letter-spacing: 0.25em;
+    font-size: clamp(0.5rem, 0.6vw, 0.65rem); font-weight: 700; letter-spacing: 0.25em;
     text-transform: uppercase; color: #ff0080; margin-bottom: 0.15rem;
   }
   .slide-title {
-    font-size: clamp(1.4rem, 2.4vw, 2rem); font-weight: 800;
-    color: #32ff7e; margin-bottom: 0.4rem; line-height: 1.1;
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem); font-weight: 800;
+    color: #32ff7e; margin-bottom: 0.5rem; line-height: 1.1;
   }
   .slide-title .accent { color: #ff0080; }
-  .slide-body { font-size: 0.7rem; line-height: 1.5; color: #cbd5e1; }
+  .slide-body { font-size: clamp(0.7rem, 0.9vw, 0.85rem); line-height: 1.5; color: #cbd5e1; }
   .section-divider {
     width: 100%; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(50,255,126,0.1), rgba(255,0,128,0.1), transparent);
@@ -140,13 +148,13 @@
   }
   .team-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-2px); }
   .team-card .avatar {
-    width: 36px; height: 36px; border-radius: 50%; margin: 0 auto 0.25rem;
+    width: clamp(36px, 3vw, 48px); height: clamp(36px, 3vw, 48px); border-radius: 50%; margin: 0 auto 0.25rem;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.7rem; font-weight: 800; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    font-size: clamp(0.65rem, 0.8vw, 0.85rem); font-weight: 800; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
-  .team-card .name { font-size: 0.65rem; font-weight: 700; color: #f1f5f9; }
-  .team-card .role { font-size: 0.55rem; font-weight: 600; }
-  .team-card .desc { font-size: 0.52rem; color: #64748b; line-height: 1.3; margin-top: 0.1rem; }
+  .team-card .name { font-size: clamp(0.6rem, 0.75vw, 0.8rem); font-weight: 700; color: #f1f5f9; }
+  .team-card .role { font-size: clamp(0.5rem, 0.6vw, 0.65rem); font-weight: 600; }
+  .team-card .desc { font-size: clamp(0.48rem, 0.55vw, 0.6rem); color: #64748b; line-height: 1.35; margin-top: 0.1rem; }
   .team-card .role-pm { color: #32ff7e; } .team-card .role-fe { color: #60a5fa; } .team-card .role-be { color: #f472b6; } .team-card .role-qa { color: #fbbf24; } .team-card .role-an { color: #a78bfa; }
   .team-card.leader { border-color: rgba(50,255,126,0.15); background: rgba(50,255,126,0.03); }
   .team-card.leader .avatar { background: linear-gradient(135deg, #32ff7e, #00cc66); }
@@ -159,7 +167,7 @@
   .org-chart { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; width: 100%; }
   .org-row { display: flex; gap: 0.7rem; flex-wrap: wrap; justify-content: center; }
   .org-node {
-    padding: 0.2rem 0.7rem; border-radius: 8px; font-size: 0.6rem; font-weight: 500;
+    padding: 0.2rem 0.7rem; border-radius: 8px; font-size: clamp(0.55rem, 0.65vw, 0.7rem); font-weight: 500;
     text-align: center; border: 1px solid rgba(255,255,255,0.06);
     background: rgba(255,255,255,0.02); min-width: 110px;
     transition: all 0.3s;
@@ -192,7 +200,7 @@
   }
   .screenshot-card img { width: 100%; display: block; }
   .screenshot-card .caption {
-    padding: 0.2rem 0.45rem; font-size: 0.48rem; color: #94a3b8;
+    padding: 0.25rem 0.5rem; font-size: clamp(0.45rem, 0.55vw, 0.6rem); color: #94a3b8;
     display: flex; justify-content: space-between; align-items: center;
   }
   .screenshot-card .caption .page-name { color: #32ff7e; font-weight: 600; }
@@ -220,13 +228,13 @@
 
   /* ===== ARCH BOX ===== */
   .arch-box {
-    border-radius: 10px; padding: 0.6rem;
+    border-radius: 10px; padding: clamp(0.5rem, 0.7vw, 0.8rem);
     border: 1px solid rgba(255,255,255,0.06);
     background: rgba(255,255,255,0.02);
   }
-  .arch-box h4 { font-size: 0.6rem; font-weight: 700; color: #32ff7e; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.3rem; }
+  .arch-box h4 { font-size: clamp(0.55rem, 0.7vw, 0.75rem); font-weight: 700; color: #32ff7e; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.3rem; }
   .arch-box ul { list-style: none; }
-  .arch-box ul li { font-size: 0.55rem; color: #94a3b8; padding-left: 0.6rem; position: relative; line-height: 1.5; }
+  .arch-box ul li { font-size: clamp(0.5rem, 0.6vw, 0.65rem); color: #94a3b8; padding-left: 0.6rem; position: relative; line-height: 1.6; }
   .arch-box ul li::before { content: '›'; position: absolute; left: 0; color: #ff0080; font-weight: 700; }
 
   /* ===== ARCH FLOW ===== */
@@ -238,7 +246,7 @@
   }
   .arch-flow .step {
     text-align: center; padding: 0.2rem 0.55rem; border-radius: 6px;
-    font-size: 0.48rem; font-weight: 600;
+    font-size: clamp(0.45rem, 0.55vw, 0.6rem); font-weight: 600;
   }
   .arch-flow .step.s1 { background: rgba(50,255,126,0.08); color: #32ff7e; }
   .arch-flow .step.s2 { background: rgba(255,0,128,0.08); color: #ff0080; }
@@ -250,7 +258,7 @@
     background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06);
     border-radius: 8px; padding: 0.4rem;
     font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
-    font-size: 0.4rem; line-height: 1.35; color: #a8b4c8;
+    font-size: clamp(0.4rem, 0.5vw, 0.55rem); line-height: 1.4; color: #a8b4c8;
     overflow-x: auto; white-space: pre;
     box-shadow: inset 0 0 30px rgba(0,0,0,0.2);
   }
@@ -270,7 +278,7 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 0.55rem; font-weight: 800;
   }
-  .client-req .req-text { font-size: 0.55rem; color: #94a3b8; line-height: 1.35; }
+  .client-req .req-text { font-size: clamp(0.5rem, 0.6vw, 0.65rem); color: #94a3b8; line-height: 1.35; }
   .client-req .req-text strong { color: #e2e8f0; }
 
   /* ===== JUSTIFICATIONS ===== */
@@ -282,27 +290,27 @@
     transition: all 0.3s;
   }
   .justif-item:hover { border-color: rgba(255,255,255,0.12); }
-  .justif-item .j-title { font-size: 0.5rem; font-weight: 700; color: #e2e8f0; }
-  .justif-item .j-desc { font-size: 0.48rem; color: #64748b; line-height: 1.3; }
+  .justif-item .j-title { font-size: clamp(0.48rem, 0.55vw, 0.6rem); font-weight: 700; color: #e2e8f0; }
+  .justif-item .j-desc { font-size: clamp(0.45rem, 0.5vw, 0.55rem); color: #64748b; line-height: 1.3; }
   .justif-item.fe { border-left-color: #60a5fa; }
   .justif-item.be { border-left-color: #f472b6; }
 
   /* ===== TEST CARDS ===== */
   .test-card {
     background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 10px; padding: 0.5rem;
+    border-radius: 10px; padding: clamp(0.45rem, 0.6vw, 0.65rem);
     transition: all 0.3s;
   }
   .test-card:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-1px); }
-  .test-card h4 { font-size: 0.6rem; font-weight: 700; margin-bottom: 0.1rem; display: flex; align-items: center; gap: 0.3rem; }
+  .test-card h4 { font-size: clamp(0.55rem, 0.65vw, 0.7rem); font-weight: 700; margin-bottom: 0.1rem; display: flex; align-items: center; gap: 0.3rem; }
   .test-card .step-label {
-    font-size: 0.4rem; text-transform: uppercase; color: #475569;
+    font-size: clamp(0.38rem, 0.45vw, 0.48rem); text-transform: uppercase; color: #475569;
     letter-spacing: 0.08em; margin-top: 0.15rem;
   }
-  .test-card .step-text { font-size: 0.5rem; color: #94a3b8; line-height: 1.3; }
+  .test-card .step-text { font-size: clamp(0.48rem, 0.55vw, 0.6rem); color: #94a3b8; line-height: 1.3; }
   .test-card .result {
     display: inline-block; padding: 0.1rem 0.5rem; border-radius: 100px;
-    font-size: 0.45rem; font-weight: 700; margin-top: 0.1rem;
+    font-size: clamp(0.42rem, 0.5vw, 0.52rem); font-weight: 700; margin-top: 0.1rem;
     background: rgba(50,255,126,0.08); color: #32ff7e;
     border: 1px solid rgba(50,255,126,0.15);
   }
@@ -312,7 +320,7 @@
     display: flex; justify-content: space-between;
     padding: 0.15rem 0.35rem; border-radius: 4px;
     background: rgba(50,255,126,0.02);
-    font-size: 0.5rem; line-height: 1.6;
+    font-size: clamp(0.48rem, 0.55vw, 0.6rem); line-height: 1.6;
     border-bottom: 1px solid rgba(255,255,255,0.03);
   }
   .result-row span:last-child { font-weight: 700; color: #32ff7e; }
@@ -321,7 +329,7 @@
   .tech-stack { display: flex; flex-wrap: wrap; gap: 0.2rem; }
   .tech-stack .tech {
     padding: 0.08rem 0.45rem; border-radius: 100px;
-    font-size: 0.45rem; font-weight: 500;
+    font-size: clamp(0.42rem, 0.5vw, 0.55rem); font-weight: 500;
     border: 1px solid rgba(255,255,255,0.06);
     background: rgba(255,255,255,0.02); color: #94a3b8;
     transition: all 0.3s;
@@ -351,7 +359,7 @@
   .slide-final .badge {
     display: inline-block; padding: 0.5rem 2rem;
     border: 1px solid rgba(255,0,128,0.2); border-radius: 100px;
-    font-size: 0.9rem; font-weight: 700; letter-spacing: 0.25em;
+    font-size: clamp(0.7rem, 1vw, 1rem); font-weight: 700; letter-spacing: 0.25em;
     text-transform: uppercase; color: #ff0080; background: rgba(255,0,128,0.06);
   }
   .slide-final h2 {
@@ -370,7 +378,7 @@
   .db-box { display: flex; flex-wrap: wrap; gap: 0.25rem; justify-content: center; }
   .db-box .tbl {
     border: 1px solid rgba(255,255,255,0.06); border-radius: 6px;
-    overflow: hidden; font-size: 0.42rem;
+    overflow: hidden; font-size: clamp(0.4rem, 0.5vw, 0.55rem);
     transition: all 0.3s;
   }
   .db-box .tbl:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-1px); }
@@ -538,7 +546,7 @@
     <h2 class="slide-title">¿Qué es <span class="accent">GQG System</span>?</h2>
     <div class="two-col" style="gap:0.6rem;">
       <div>
-        <p class="slide-body" style="font-size:0.6rem; margin-bottom:0.35rem;">
+        <p class="slide-body" style="margin-bottom:0.35rem;">
           Sistema que extiende la facturación de <strong style="color:#e2e8f0;">contado</strong> a
           <strong style="color:#32ff7e;">crédito automatizado</strong>. Parametriza vencimientos
           <strong style="color:#e2e8f0;">regulares</strong> e <strong style="color:#ff0080;">irregulares</strong>
@@ -547,19 +555,19 @@
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem; margin-bottom:0.35rem;">
           <div style="background:rgba(50,255,126,0.03); border:1px solid rgba(50,255,126,0.08); border-radius:6px; padding:0.25rem 0.4rem;">
-            <div style="font-size:0.5rem; font-weight:700; color:#32ff7e;">+ Automatización</div>
-            <div style="font-size:0.48rem; color:#94a3b8;">Cuotas generadas al instante sin intervención manual</div>
+            <div style="font-weight:700; color:#32ff7e;">+ Automatización</div>
+            <div style="color:#94a3b8;">Cuotas generadas al instante sin intervención manual</div>
           </div>
           <div style="background:rgba(255,0,128,0.03); border:1px solid rgba(255,0,128,0.08); border-radius:6px; padding:0.25rem 0.4rem;">
-            <div style="font-size:0.5rem; font-weight:700; color:#ff0080;">+ Precisión</div>
-            <div style="font-size:0.48rem; color:#94a3b8;">TRUNCATE sin pérdida decimal en el prorrateo</div>
+            <div style="font-weight:700; color:#ff0080;">+ Precisión</div>
+            <div style="color:#94a3b8;">TRUNCATE sin pérdida decimal en el prorrateo</div>
           </div>
           <div style="background:rgba(96,165,250,0.03); border:1px solid rgba(96,165,250,0.08); border-radius:6px; padding:0.25rem 0.4rem;">
-            <div style="font-size:0.5rem; font-weight:700; color:#60a5fa;">+ Flexibilidad</div>
-            <div style="font-size:0.48rem; color:#94a3b8;">Vencimientos regulares e irregulares parametrizables</div>
+            <div style="font-weight:700; color:#60a5fa;">+ Flexibilidad</div>
+            <div style="color:#94a3b8;">Vencimientos regulares e irregulares parametrizables</div>
           </div>
           <div style="background:rgba(251,191,36,0.03); border:1px solid rgba(251,191,36,0.08); border-radius:6px; padding:0.25rem 0.4rem;">
-            <div style="font-size:0.5rem; font-weight:700; color:#fbbf24;">+ Offline</div>
+            <div style="font-weight:700; color:#fbbf24;">+ Offline</div>
             <div style="font-size:0.48rem; color:#94a3b8;">Modo desconectado con respaldo en localStorage</div>
           </div>
         </div>
