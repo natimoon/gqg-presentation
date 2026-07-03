@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GQG System — Presentación del Proyecto</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #060b1a;
+    color: #e2e8f0;
+    width: 100%;
+  }
+  .fonts-loaded body { font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+  ::selection { background: rgba(50,255,126,0.25); color: #fff; }
+
+  @page { size: A4 landscape; margin: 0; }
+
+  /* ===== SLIDE BASE ===== */
+  .slide {
+    width: 100%; min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; padding: 2.5rem 4rem;
+    position: relative; overflow: hidden;
+    page-break-after: always; page-break-inside: avoid;
+    opacity: 1;
+  }
+
+  .slide::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 15% 50%, rgba(50,255,126,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse at 85% 50%, rgba(255,0,128,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .slide::after {
+    content: 'GQG System © 2026 · Facultad Politécnica UNA';
+    position: absolute; bottom: 0.6rem; right: 1.5rem;
+    font-size: 0.45rem; color: rgba(255,255,255,0.08);
+    letter-spacing: 0.1em;
+  }
+
+  .slide-number {
+    position: absolute; bottom: 0.6rem; left: 1.5rem;
+    font-size: 0.5rem; font-weight: 600; color: rgba(255,255,255,0.12);
+    letter-spacing: 0.15em;
+  }
+  .slide-number strong { color: rgba(255,255,255,0.25); }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-track {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: 2px; background: rgba(255,255,255,0.04);
+  }
+  .progress-bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #32ff7e, #ff0080);
+    transition: width 0.3s ease;
+  }
+
+  /* ===== NAV ===== */
+  .nav-bar {
+    position: fixed; top: 2px; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: center; gap: 0.15rem;
+    padding: 0.35rem; background: rgba(6,11,26,0.8);
+    backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .nav-bar a {
+    color: #64748b; text-decoration: none;
+    font-size: 0.5rem; font-weight: 500;
+    padding: 0.15rem 0.5rem; border-radius: 6px;
+    transition: all 0.3s; position: relative;
+  }
+  .nav-bar a::after {
+    content: ''; position: absolute; bottom: 1px; left: 50%; transform: translateX(-50%);
+    width: 0; height: 1.5px; border-radius: 2px;
+    background: #32ff7e; transition: width 0.3s;
+  }
+  .nav-bar a:hover { color: #e2e8f0; background: rgba(255,255,255,0.03); }
+  .nav-bar a.active { color: #32ff7e; }
+  .nav-bar a.active::after { width: 60%; }
+
+  /* ===== SLIDE COVER ===== */
+  .slide-cover {
+    background: linear-gradient(135deg, #060b1a 0%, #0a1628 50%, #0d1b3e 100%);
+    text-align: center; align-items: center; gap: 0.5rem;
+  }
+  .slide-cover .badge {
+    display: inline-block; padding: 0.3rem 1.2rem;
+    border: 1px solid rgba(50,255,126,0.2); border-radius: 100px;
+    font-size: 0.55rem; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #32ff7e; background: rgba(50,255,126,0.04);
+  }
+  .slide-cover h1 {
+    font-size: clamp(3rem, 5.5vw, 5rem); font-weight: 900; line-height: 1;
+    background: linear-gradient(135deg, #32ff7e 0%, #00e673 40%, #ff0080 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    letter-spacing: -0.02em;
+  }
+  .slide-cover .subtitle { font-size: clamp(0.85rem, 1.3vw, 1.1rem); font-weight: 300; color: #94a3b8; max-width: 600px; }
+  .slide-cover .meta { display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+  .slide-cover .meta span { font-size: 0.65rem; color: #64748b; }
+  .slide-cover .meta strong { color: #cbd5e1; font-weight: 600; }
+  .cover-line {
+    width: 70px; height: 2.5px;
+    background: linear-gradient(90deg, #32ff7e, #ff0080);
+    border-radius: 3px; margin: 0.2rem 0;
+  }
+
+  /* ===== SLIDE CONTENT ===== */
+  .slide-section { background: linear-gradient(180deg, #060b1a 0%, #0a1628 100%); align-items: flex-start; }
+  .slide-content { width: 100%; max-width: 1150px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .slide-label {
+    font-size: 0.55rem; font-weight: 700; letter-spacing: 0.25em;
+    text-transform: uppercase; color: #ff0080; margin-bottom: 0.15rem;
+  }
+  .slide-title {
+    font-size: clamp(1.4rem, 2.4vw, 2rem); font-weight: 800;
+    color: #32ff7e; margin-bottom: 0.4rem; line-height: 1.1;
+  }
+  .slide-title .accent { color: #ff0080; }
+  .slide-body { font-size: 0.7rem; line-height: 1.5; color: #cbd5e1; }
+  .section-divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(50,255,126,0.1), rgba(255,0,128,0.1), transparent);
+    margin: 0.35rem 0;
+  }
+
+  /* ===== TEAM ===== */
+  .team-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.6rem; width: 100%; }
+  .team-card {
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px; padding: 0.65rem 0.45rem; text-align: center;
+    transition: all 0.3s;
+  }
+  .team-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-2px); }
+  .team-card .avatar {
+    width: 36px; height: 36px; border-radius: 50%; margin: 0 auto 0.25rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 800; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .team-card .name { font-size: 0.65rem; font-weight: 700; color: #f1f5f9; }
+  .team-card .role { font-size: 0.55rem; font-weight: 600; }
+  .team-card .desc { font-size: 0.52rem; color: #64748b; line-height: 1.3; margin-top: 0.1rem; }
+  .team-card .role-pm { color: #32ff7e; } .team-card .role-fe { color: #60a5fa; } .team-card .role-be { color: #f472b6; } .team-card .role-qa { color: #fbbf24; } .team-card .role-an { color: #a78bfa; }
+  .team-card.leader { border-color: rgba(50,255,126,0.15); background: rgba(50,255,126,0.03); }
+  .team-card.leader .avatar { background: linear-gradient(135deg, #32ff7e, #00cc66); }
+  .team-card.fe .avatar { background: linear-gradient(135deg, #60a5fa, #2563eb); }
+  .team-card.be .avatar { background: linear-gradient(135deg, #f472b6, #db2777); }
+  .team-card.qa .avatar { background: linear-gradient(135deg, #fbbf24, #d97706); }
+  .team-card.an .avatar { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+
+  /* ===== ORG CHART ===== */
+  .org-chart { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; width: 100%; }
+  .org-row { display: flex; gap: 0.7rem; flex-wrap: wrap; justify-content: center; }
+  .org-node {
+    padding: 0.2rem 0.7rem; border-radius: 8px; font-size: 0.6rem; font-weight: 500;
+    text-align: center; border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02); min-width: 110px;
+    transition: all 0.3s;
+  }
+  .org-node:hover { transform: translateY(-1px); }
+  .org-node.pm {
+    border-color: rgba(50,255,126,0.25); background: rgba(50,255,126,0.05);
+    color: #32ff7e; box-shadow: 0 0 20px rgba(50,255,126,0.05);
+  }
+  .org-node.sub { font-weight: 400; color: #94a3b8; }
+  .org-line { width: 2px; height: 7px; background: rgba(255,255,255,0.05); }
+  .org-bracket {
+    border: 1px dashed rgba(255,255,255,0.04);
+    border-radius: 10px; padding: 0.4rem 0.8rem;
+    background: rgba(255,255,255,0.008);
+  }
+
+  /* ===== SCREENSHOTS ===== */
+  .screenshot-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.45rem; width: 100%; }
+  .screenshot-card {
+    border-radius: 8px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+    transition: all 0.3s; cursor: pointer;
+  }
+  .screenshot-card:hover {
+    border-color: rgba(50,255,126,0.2);
+    transform: scale(1.008);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  }
+  .screenshot-card img { width: 100%; display: block; }
+  .screenshot-card .caption {
+    padding: 0.2rem 0.45rem; font-size: 0.48rem; color: #94a3b8;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .screenshot-card .caption .page-name { color: #32ff7e; font-weight: 600; }
+  .screenshot-card .caption .badge-tag {
+    padding: 0.08rem 0.35rem; border-radius: 100px;
+    font-size: 0.4rem; font-weight: 500;
+    background: rgba(255,0,128,0.06);
+    border: 1px solid rgba(255,0,128,0.1); color: #ff0080;
+  }
+
+  /* ===== LIGHTBOX ===== */
+  .lightbox {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 999; background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+    cursor: zoom-out;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+
+  /* ===== LAYOUTS ===== */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; width: 100%; }
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; width: 100%; }
+
+  /* ===== ARCH BOX ===== */
+  .arch-box {
+    border-radius: 10px; padding: 0.6rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+  }
+  .arch-box h4 { font-size: 0.6rem; font-weight: 700; color: #32ff7e; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.3rem; }
+  .arch-box ul { list-style: none; }
+  .arch-box ul li { font-size: 0.55rem; color: #94a3b8; padding-left: 0.6rem; position: relative; line-height: 1.5; }
+  .arch-box ul li::before { content: '›'; position: absolute; left: 0; color: #ff0080; font-weight: 700; }
+
+  /* ===== ARCH FLOW ===== */
+  .arch-flow {
+    display: flex; align-items: center; justify-content: center; gap: 0.35rem;
+    flex-wrap: wrap; padding: 0.35rem;
+    border-radius: 8px; background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .arch-flow .step {
+    text-align: center; padding: 0.2rem 0.55rem; border-radius: 6px;
+    font-size: 0.48rem; font-weight: 600;
+  }
+  .arch-flow .step.s1 { background: rgba(50,255,126,0.08); color: #32ff7e; }
+  .arch-flow .step.s2 { background: rgba(255,0,128,0.08); color: #ff0080; }
+  .arch-flow .step.s3 { background: rgba(96,165,250,0.08); color: #60a5fa; }
+  .arch-flow .arrow { color: rgba(255,255,255,0.12); font-size: 0.65rem; }
+
+  /* ===== CODE BLOCK ===== */
+  .code-block {
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px; padding: 0.4rem;
+    font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.4rem; line-height: 1.35; color: #a8b4c8;
+    overflow-x: auto; white-space: pre;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.2);
+  }
+  .code-block .kw { color: #ff0080; } .code-block .fn { color: #32ff7e; }
+  .code-block .str { color: #fbbf24; } .code-block .cm { color: #475569; }
+
+  /* ===== CLIENT REQ ===== */
+  .client-req {
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px; padding: 0.45rem; display: flex; gap: 0.45rem; align-items: flex-start;
+    transition: all 0.3s;
+  }
+  .client-req:hover { border-color: rgba(255,255,255,0.12); }
+  .client-req .req-icon {
+    flex-shrink: 0; width: 24px; height: 24px; border-radius: 6px;
+    background: rgba(255,0,128,0.08); color: #ff0080;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.55rem; font-weight: 800;
+  }
+  .client-req .req-text { font-size: 0.55rem; color: #94a3b8; line-height: 1.35; }
+  .client-req .req-text strong { color: #e2e8f0; }
+
+  /* ===== JUSTIFICATIONS ===== */
+  .justif-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem; }
+  .justif-item {
+    background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px; padding: 0.3rem;
+    border-left: 2px solid #32ff7e;
+    transition: all 0.3s;
+  }
+  .justif-item:hover { border-color: rgba(255,255,255,0.12); }
+  .justif-item .j-title { font-size: 0.5rem; font-weight: 700; color: #e2e8f0; }
+  .justif-item .j-desc { font-size: 0.48rem; color: #64748b; line-height: 1.3; }
+  .justif-item.fe { border-left-color: #60a5fa; }
+  .justif-item.be { border-left-color: #f472b6; }
+
+  /* ===== TEST CARDS ===== */
+  .test-card {
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 0.5rem;
+    transition: all 0.3s;
+  }
+  .test-card:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-1px); }
+  .test-card h4 { font-size: 0.6rem; font-weight: 700; margin-bottom: 0.1rem; display: flex; align-items: center; gap: 0.3rem; }
+  .test-card .step-label {
+    font-size: 0.4rem; text-transform: uppercase; color: #475569;
+    letter-spacing: 0.08em; margin-top: 0.15rem;
+  }
+  .test-card .step-text { font-size: 0.5rem; color: #94a3b8; line-height: 1.3; }
+  .test-card .result {
+    display: inline-block; padding: 0.1rem 0.5rem; border-radius: 100px;
+    font-size: 0.45rem; font-weight: 700; margin-top: 0.1rem;
+    background: rgba(50,255,126,0.08); color: #32ff7e;
+    border: 1px solid rgba(50,255,126,0.15);
+  }
+
+  /* ===== RESULTS ===== */
+  .result-row {
+    display: flex; justify-content: space-between;
+    padding: 0.15rem 0.35rem; border-radius: 4px;
+    background: rgba(50,255,126,0.02);
+    font-size: 0.5rem; line-height: 1.6;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .result-row span:last-child { font-weight: 700; color: #32ff7e; }
+
+  /* ===== TECH STACK ===== */
+  .tech-stack { display: flex; flex-wrap: wrap; gap: 0.2rem; }
+  .tech-stack .tech {
+    padding: 0.08rem 0.45rem; border-radius: 100px;
+    font-size: 0.45rem; font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02); color: #94a3b8;
+    transition: all 0.3s;
+  }
+  .tech-stack .tech:hover { border-color: rgba(255,255,255,0.15); color: #e2e8f0; }
+
+  /* ===== BUTTONS ===== */
+  .btn-link {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.3rem 0.9rem; border-radius: 8px;
+    font-size: 0.6rem; font-weight: 700;
+    text-decoration: none; transition: all 0.3s;
+    background: linear-gradient(135deg, rgba(50,255,126,0.06), rgba(255,0,128,0.06));
+    border: 1px solid rgba(255,255,255,0.06); color: #e2e8f0;
+  }
+  .btn-link:hover {
+    background: linear-gradient(135deg, rgba(50,255,126,0.12), rgba(255,0,128,0.12));
+    border-color: rgba(50,255,126,0.2);
+    transform: translateY(-1px);
+  }
+
+  /* ===== CLOSING ===== */
+  .slide-final {
+    background: linear-gradient(135deg, #060b1a 0%, #0d1b3e 100%);
+    text-align: center; align-items: center; gap: 0.8rem;
+  }
+  .slide-final .badge {
+    display: inline-block; padding: 0.5rem 2rem;
+    border: 1px solid rgba(255,0,128,0.2); border-radius: 100px;
+    font-size: 0.9rem; font-weight: 700; letter-spacing: 0.25em;
+    text-transform: uppercase; color: #ff0080; background: rgba(255,0,128,0.06);
+  }
+  .slide-final h2 {
+    font-size: clamp(3.5rem, 7vw, 6rem); font-weight: 900; line-height: 1;
+    background: linear-gradient(135deg, #32ff7e, #00e673 40%, #ff0080 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    letter-spacing: -0.02em;
+  }
+  .slide-final .sub {
+    color: #94a3b8; font-weight: 300; font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    max-width: 500px;
+  }
+  .slide-final p { color: #64748b; line-height: 1.5; font-size: 0.65rem; }
+
+  /* ===== DB DIAGRAM ===== */
+  .db-box { display: flex; flex-wrap: wrap; gap: 0.25rem; justify-content: center; }
+  .db-box .tbl {
+    border: 1px solid rgba(255,255,255,0.06); border-radius: 6px;
+    overflow: hidden; font-size: 0.42rem;
+    transition: all 0.3s;
+  }
+  .db-box .tbl:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-1px); }
+  .db-box .tbl .th { padding: 0.08rem 0.35rem; font-weight: 700; text-align: center; }
+  .db-box .tbl .td { padding: 0.06rem 0.35rem; border-top: 1px solid rgba(255,255,255,0.03); }
+
+  .badge-tag {
+    display: inline-block; padding: 0.08rem 0.35rem; border-radius: 100px;
+    font-size: 0.42rem; font-weight: 500;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06); color: #94a3b8;
+  }
+
+  /* ===== ANIMATED PARTICLES ===== */
+  .particles {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden; pointer-events: none;
+  }
+  .particle {
+    position: absolute; width: 2px; height: 2px;
+    background: linear-gradient(135deg, #32ff7e, #ff0080);
+    border-radius: 50%; opacity: 0.15;
+    animation: float 15s infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.1; }
+    25% { transform: translateY(-30px) translateX(10px); opacity: 0.2; }
+    50% { transform: translateY(-60px) translateX(-5px); opacity: 0.1; }
+    75% { transform: translateY(-20px) translateX(15px); opacity: 0.2; }
+  }
+
+  @media print {
+    .nav-bar, .lightbox, .progress-track { display: none !important; }
+    body { background: #060b1a; }
+    .slide { height: 100vh; max-height: 100vh; page-break-after: always; page-break-inside: avoid; }
+  }
+  @media (max-width: 768px) {
+    .slide { padding: 2rem 1rem; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .screenshot-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+
+<nav class="nav-bar" id="navbar">
+  <a href="#cover" class="active">Inicio</a>
+  <a href="#team">Equipo</a>
+  <a href="#sistema">Sistema</a>
+  <a href="#frontend">Frontend</a>
+  <a href="#backend">Backend</a>
+  <a href="#testing">Testing</a>
+  <a href="#final">Cierre</a>
+</nav>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="Ampliar">
+</div>
+
+<!-- 1: COVER -->
+<section class="slide slide-cover" id="cover">
+  <div class="particles">
+    <div class="particle" style="top:20%;left:10%;animation-delay:0s;"></div>
+    <div class="particle" style="top:70%;left:5%;animation-delay:3s;"></div>
+    <div class="particle" style="top:40%;left:90%;animation-delay:5s;"></div>
+    <div class="particle" style="top:80%;left:80%;animation-delay:7s;"></div>
+    <div class="particle" style="top:10%;left:60%;animation-delay:11s;"></div>
+    <div class="particle" style="top:50%;left:40%;animation-delay:13s;"></div>
+  </div>
+  <div class="badge">Análisis de Sistemas Informáticos — IS3</div>
+  <h1>GQG System</h1>
+  <div class="cover-line"></div>
+  <p class="subtitle">Parametrización de Vencimientos de Cuotas — Regulares e Irregulares</p>
+  <div class="meta">
+    <span>Facultad Politécnica — <strong>Sede San Lorenzo</strong></span>
+    <span>Docente: <strong>Prof. Lic. Gregorio Quintana González</strong></span>
+    <span>Grupo: <strong>9</strong></span>
+  </div>
+  <a href="#team" class="btn-link" style="margin-top:0.3rem;">Conocer al equipo <span style="font-size:0.7rem;">→</span></a>
+  <div class="slide-number">01 <strong>/ 07</strong></div>
+</section>
+
+<!-- 2: TEAM -->
+<section class="slide slide-section" id="team">
+  <div class="slide-content">
+    <div class="slide-label">Equipo de Desarrollo</div>
+    <h2 class="slide-title">Organigrama del <span class="accent">Proyecto</span></h2>
+    <div class="org-chart">
+      <div class="org-node pm" style="font-size:0.75rem; padding:0.35rem 1.5rem;">
+        <strong>Carlos Ruben Benitez Rey</strong><br>
+        <span style="font-weight:400; font-size:0.55rem; color:rgba(50,255,126,0.6);">Jefe de Proyecto</span>
+      </div>
+      <div class="org-line"></div>
+      <div class="org-bracket">
+        <div style="font-size:0.4rem; color:#475569; text-transform:uppercase; letter-spacing:0.1em; text-align:center; margin-bottom:0.2rem;">Supervisa directamente</div>
+        <div class="org-row">
+          <div class="org-node sub" style="border-color:rgba(96,165,250,0.12); background:rgba(96,165,250,0.02);">
+            <span style="font-size:0.8rem;">🎨</span> Alejandro Acosta<br>
+            <span style="color:#60a5fa; font-weight:600;">Frontend</span>
+          </div>
+          <div class="org-node sub" style="border-color:rgba(244,114,182,0.12); background:rgba(244,114,182,0.02);">
+            <span style="font-size:0.8rem;">⚙️</span> Silvia Barrientos<br>
+            <span style="color:#f472b6; font-weight:600;">Backend</span>
+          </div>
+          <div class="org-node sub" style="border-color:rgba(251,191,36,0.12); background:rgba(251,191,36,0.02);">
+            <span style="font-size:0.8rem;">🧪</span> Luis Godoy<br>
+            <span style="color:#fbbf24; font-weight:600;">Tester</span>
+          </div>
+          <div class="org-node sub" style="border-color:rgba(167,139,250,0.12); background:rgba(167,139,250,0.02);">
+            <span style="font-size:0.8rem;">📋</span> Natalia Godoy<br>
+            <span style="color:#a78bfa; font-weight:600;">Analista</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="team-grid">
+      <div class="team-card leader">
+        <div class="avatar">CR</div>
+        <div class="name">Carlos Benitez Rey</div>
+        <div class="role role-pm">Jefe de Proyecto</div>
+        <div class="desc">Supervisa, planifica, controla el cronograma y facilita la comunicación con el patrocinador y el tutor.</div>
+      </div>
+      <div class="team-card fe">
+        <div class="avatar">AA</div>
+        <div class="name">Alejandro Acosta</div>
+        <div class="role role-fe">Frontend Developer</div>
+        <div class="desc">Diseño e implementación de la interfaz React, componentes de facturación, formularios y previsualización de cuotas.</div>
+      </div>
+      <div class="team-card be">
+        <div class="avatar">SB</div>
+        <div class="name">Silvia A. Barrientos R.</div>
+        <div class="role role-be">Backend Developer</div>
+        <div class="desc">Creación de tablas, programación de Triggers PostgreSQL y funciones de cálculo de vencimientos.</div>
+      </div>
+      <div class="team-card qa">
+        <div class="avatar">LG</div>
+        <div class="name">Luis Godoy</div>
+        <div class="role role-qa">Tester QA</div>
+        <div class="desc">Pruebas unitarias de cálculos decimales, pruebas de integración React + Triggers y reporte de aceptación.</div>
+      </div>
+      <div class="team-card an">
+        <div class="avatar">NG</div>
+        <div class="name">Natalia L. Godoy Ramírez</div>
+        <div class="role role-an">Analista</div>
+        <div class="desc">Definición de reglas de negocio, especificación de casos de uso y modelado de requisitos.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">02 <strong>/ 07</strong></div>
+</section>
+
+<!-- 3: SYSTEM -->
+<section class="slide slide-section" id="sistema">
+  <div class="slide-content">
+    <div class="slide-label">Natalia Godoy — Analista</div>
+    <h2 class="slide-title">¿Qué es <span class="accent">GQG System</span>?</h2>
+    <div class="two-col" style="gap:0.6rem;">
+      <div>
+        <p class="slide-body" style="font-size:0.6rem; margin-bottom:0.35rem;">
+          Sistema que extiende la facturación de <strong style="color:#e2e8f0;">contado</strong> a
+          <strong style="color:#32ff7e;">crédito automatizado</strong>. Parametriza vencimientos
+          <strong style="color:#e2e8f0;">regulares</strong> e <strong style="color:#ff0080;">irregulares</strong>
+          mediante Triggers PostgreSQL que generan cuotas automáticamente en <strong style="color:#a78bfa;">CUENTAS_COBRAR</strong>.
+        </p>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem; margin-bottom:0.35rem;">
+          <div style="background:rgba(50,255,126,0.03); border:1px solid rgba(50,255,126,0.08); border-radius:6px; padding:0.25rem 0.4rem;">
+            <div style="font-size:0.5rem; font-weight:700; color:#32ff7e;">+ Automatización</div>
+            <div style="font-size:0.48rem; color:#94a3b8;">Cuotas generadas al instante sin intervención manual</div>
+          </div>
+          <div style="background:rgba(255,0,128,0.03); border:1px solid rgba(255,0,128,0.08); border-radius:6px; padding:0.25rem 0.4rem;">
+            <div style="font-size:0.5rem; font-weight:700; color:#ff0080;">+ Precisión</div>
+            <div style="font-size:0.48rem; color:#94a3b8;">TRUNCATE sin pérdida decimal en el prorrateo</div>
+          </div>
+          <div style="background:rgba(96,165,250,0.03); border:1px solid rgba(96,165,250,0.08); border-radius:6px; padding:0.25rem 0.4rem;">
+            <div style="font-size:0.5rem; font-weight:700; color:#60a5fa;">+ Flexibilidad</div>
+            <div style="font-size:0.48rem; color:#94a3b8;">Vencimientos regulares e irregulares parametrizables</div>
+          </div>
+          <div style="background:rgba(251,191,36,0.03); border:1px solid rgba(251,191,36,0.08); border-radius:6px; padding:0.25rem 0.4rem;">
+            <div style="font-size:0.5rem; font-weight:700; color:#fbbf24;">+ Offline</div>
+            <div style="font-size:0.48rem; color:#94a3b8;">Modo desconectado con respaldo en localStorage</div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.48rem; font-weight:600; color:#475569; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.2rem;">Stack Tecnológico</div>
+          <div class="tech-stack">
+            <span class="tech" style="border-color:rgba(96,165,250,0.12);color:#60a5fa;">React 19</span>
+            <span class="tech" style="border-color:rgba(96,165,250,0.12);color:#60a5fa;">TypeScript</span>
+            <span class="tech" style="border-color:rgba(96,165,250,0.12);color:#60a5fa;">TailwindCSS</span>
+            <span class="tech" style="border-color:rgba(96,165,250,0.12);color:#60a5fa;">Vite</span>
+            <span class="tech" style="border-color:rgba(244,114,182,0.12);color:#f472b6;">Supabase JS</span>
+            <span class="tech" style="border-color:rgba(50,255,126,0.12);color:#32ff7e;">PostgreSQL</span>
+            <span class="tech" style="border-color:rgba(244,114,182,0.12);color:#f472b6;">Triggers SQL</span>
+            <span class="tech" style="border-color:rgba(251,191,36,0.12);color:#fbbf24;">PERT / CPM</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="background:rgba(255,255,255,0.015); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:0.5rem; margin-bottom:0.35rem;">
+          <h4 style="font-size:0.5rem; font-weight:700; color:#ff0080; margin-bottom:0.3rem; letter-spacing:0.06em; text-transform:uppercase;">📋 Requerimientos del Cliente</h4>
+          <div class="client-req" style="margin-bottom:0.3rem;">
+            <div class="req-icon">CO</div>
+            <div class="req-text"><strong>Contado:</strong> Cuotas únicas canceladas en la misma fecha de la factura.</div>
+          </div>
+          <div class="client-req">
+            <div class="req-icon">CR</div>
+            <div class="req-text"><strong>Crédito:</strong> Múltiples cuotas — <span style="color:#32ff7e;">Regular</span> (30/60/90 días) o <span style="color:#ff0080;">Irregular</span> (45/75 días con %)</div>
+          </div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.015); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:0.5rem; margin-bottom:0.35rem; display:flex; align-items:center; justify-content:center;">
+          <div>
+            <h4 style="font-size:0.5rem; font-weight:700; color:#32ff7e; margin-bottom:0.25rem; letter-spacing:0.06em; text-transform:uppercase; text-align:center;">⚡ Flujo del Sistema</h4>
+            <div class="arch-flow">
+              <div class="step s1">🧾 Facturación</div><div class="arrow">→</div>
+              <div class="step s2">💾 INSERT VENTAS</div><div class="arrow">→</div>
+              <div class="step s3">⚡ Trigger AFTER</div><div class="arrow">→</div>
+              <div class="step s1">📊 CUENTAS_COBRAR</div><div class="arrow">→</div>
+              <div class="step s2">💰 Cobro + Saldo</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin-top:0.35rem;">
+          <a href="http://localhost:5173/" target="_blank" class="btn-link" style="font-size:0.5rem;">🌐 Acceder al Sistema <span style="font-size:0.6rem;">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">03 <strong>/ 07</strong></div>
+</section>
+
+<!-- 4: FRONTEND (ALEJANDRO) -->
+<section class="slide slide-section" id="frontend">
+  <div class="slide-content">
+    <div class="slide-label">Alejandro Acosta — Frontend</div>
+    <h2 class="slide-title">Prototipo de Interfaz <span class="accent">Gráfica</span></h2>
+    <div class="screenshot-grid" style="max-width:80%;margin:0 auto;">
+      <div class="screenshot-card" onclick="openLightbox('screenshots/nueva-venta.png')">
+        <img src="screenshots/nueva-venta.png" alt="Nueva Venta">
+        <div class="caption"><span class="page-name">Nueva Venta</span> <span class="badge-tag">Filtro dinámico plazos</span></div>
+      </div>
+      <div class="screenshot-card" onclick="openLightbox('screenshots/cuentas-cobrar.png')">
+        <img src="screenshots/cuentas-cobrar.png" alt="Cuentas a Cobrar">
+        <div class="caption"><span class="page-name">Cuentas a Cobrar</span> <span class="badge-tag">Vista SQL + cobro offline</span></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="slide-number">04 <strong>/ 07</strong></div>
+</section>
+
+<!-- 5: BACKEND (SILVIA) -->
+<section class="slide slide-section" id="backend">
+  <div class="slide-content">
+    <div class="slide-label">Silvia Barrientos — Backend</div>
+    <h2 class="slide-title">Implementación <span class="accent">Técnica</span></h2>
+    <p class="slide-body" style="font-size:0.6rem; margin-bottom:0.3rem;">
+      PostgreSQL con lógica de negocio centralizada en Triggers SQL. Arquitectura de lógica concentrada en BD para consistencia transaccional.
+    </p>
+    <div class="two-col">
+      <div class="arch-box">
+        <h4>🗄️ Diagrama de Base de Datos</h4>
+        <div class="db-box">
+          <div class="tbl"><div class="th" style="background:rgba(50,255,126,0.08);color:#32ff7e;">CLIENTES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">razon_social</div><div class="td">ruc, direccion</div><div class="td">telefono, activo</div></div>
+          <div class="tbl"><div class="th" style="background:rgba(255,0,128,0.08);color:#ff0080;">VENTAS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK cliente_id</div><div class="td" style="color:#60a5fa;">FK plazo_id</div><div class="td">total_factura</div><div class="td">tipo_doc_id</div><div class="td">moneda_id</div><div class="td">serie, nro_factura</div></div>
+          <div class="tbl"><div class="th" style="background:rgba(96,165,250,0.08);color:#60a5fa;">PLAZOS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">plazo, cuotas</div><div class="td" style="color:#ff0080;">FK tipo_id</div><div class="td">irregular</div><div class="td">activo</div></div>
+          <div class="tbl"><div class="th" style="background:rgba(251,191,36,0.08);color:#fbbf24;">PLAZO_DETALLES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK plazo_id</div><div class="td">cuota, dias</div><div class="td">porcentaje</div></div>
+          <div class="tbl"><div class="th" style="background:rgba(167,139,250,0.08);color:#a78bfa;">CUENTAS_COBRAR</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td" style="color:#60a5fa;">FK venta_id</div><div class="td">importe, saldo</div><div class="td">nro_cuota, vence</div><div class="td">cobrado, estado</div></div>
+          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">TIPOS_DOC</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">descripcion</div><div class="td">codigo (CO/CR)</div></div>
+          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">MONEDAS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">descripcion</div><div class="td">abreviatura</div></div>
+          <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">DEPOSITOS</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">descripcion</div><div class="td">activo</div></div>
+        </div>
+        <div style="font-size:0.4rem; color:#475569; text-align:center; margin-top:0.15rem;">CLIENTES → VENTAS (1:N) · TIPOS_DOC → PLAZOS (1:N) · PLAZOS → PLAZO_DETALLES (1:N) · VENTAS → CUENTAS_COBRAR (1:N)</div>
+      </div>
+      <div class="arch-box">
+        <h4>⚡ Lógica del Trigger <code style="color:#ff0080;">ins_ventas</code></h4>
+        <div class="code-block"><span class="kw">function</span> <span class="fn">simulateCuentasCobrarTrigger</span>(venta) {
+  <span class="cm">// 1. Validar coherencia tipo doc vs plazo</span>
+  <span class="kw">if</span> (tipoDoc === CO &amp;&amp; plazo !== contado)
+    <span class="kw">throw</span> <span class="str">'Tipo doc y plazo no coinciden.'</span>;
+
+  <span class="cm">// 2. Según el plazo, genera las cuotas</span>
+  <span class="kw">if</span> (plazo === contado)
+    1 cuota, 100%, vence = fechaFactura
+
+  <span class="kw">else if</span> (plazo === credito30)
+    1 cuota, 100%, vence = fechaFactura + 30d
+
+  <span class="kw">else if</span> (plazo === regular)
+    importeCuota = TRUNCATE(total / 3)
+    últimaCuota = total - (importeCuota × 2)
+    vencimientos: 30/60/90 días
+
+  <span class="kw">else if</span> (plazo === irregular)
+    1ra cuota = total × 45%
+    2da cuota = total × 55%
+    vencimientos: 45/75 días
+
+  <span class="cm">// 3. Suma de cuotas = total exacto (sin pérdida decimal)</span>
+  <span class="kw">return</span> cuotasGeneradas;
+}</div>
+        <div style="margin-top:0.2rem; display:flex; gap:0.2rem; flex-wrap:wrap;">
+          <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(50,255,126,0.05); border:1px solid rgba(50,255,126,0.1); color:#32ff7e;">✓ Coherencia tipo doc vs plazo</span>
+          <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(255,0,128,0.05); border:1px solid rgba(255,0,128,0.1); color:#ff0080;">✓ TRUNCATE sin pérdida decimal</span>
+          <span style="font-size:0.4rem; padding:0.06rem 0.35rem; border-radius:100px; background:rgba(96,165,250,0.05); border:1px solid rgba(96,165,250,0.1); color:#60a5fa;">✓ Regular e irregular</span>
+        </div>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="arch-flow">
+      <div class="step s1">📝 Formulario React</div><div class="arrow">→</div>
+      <div class="step s2">📤 INSERT en VENTAS</div><div class="arrow">→</div>
+      <div class="step s3">⚡ Trigger AFTER INSERT</div><div class="arrow">→</div>
+      <div class="step s1">📊 Genera CUENTAS_COBRAR</div><div class="arrow">→</div>
+      <div class="step s2">👁️ Consulta vista SQL</div>
+    </div>
+  </div>
+  <div class="slide-number">05 <strong>/ 07</strong></div>
+</section>
+
+<!-- 6: TESTING (LUIS) -->
+<section class="slide slide-section" id="testing">
+  <div class="slide-content">
+    <div class="slide-label">Luis Godoy — Tester QA</div>
+    <h2 class="slide-title">Pruebas y <span class="accent">Validación</span></h2>
+    <p class="slide-body" style="font-size:0.6rem; margin-bottom:0.3rem;">
+      Pruebas funcionales, de integración y validación de reglas de negocio para garantizar la calidad del sistema.
+    </p>
+    <div class="three-col">
+      <div class="test-card">
+        <h4 style="color:#32ff7e;"><span style="display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:4px; background:rgba(50,255,126,0.08); font-size:0.5rem;">CO</span> Contado</h4>
+        <div class="step-label">FLUJO</div>
+        <div class="step-text">Contado → Plazo "0 días" → Ingresar total → Registrar</div>
+        <div class="step-label">RESULTADO</div>
+        <div class="step-text">1 cuota por 100% del importe, vence en fecha de factura</div>
+        <div class="result">✓ VERIFICADO</div>
+      </div>
+      <div class="test-card">
+        <h4 style="color:#ff0080;"><span style="display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:4px; background:rgba(255,0,128,0.08); font-size:0.5rem;">CR</span> Crédito Regular</h4>
+        <div class="step-label">FLUJO</div>
+        <div class="step-text">Crédito → "30/60/90" → Gs. 3.000.000 → Registrar</div>
+        <div class="step-label">RESULTADO</div>
+        <div class="step-text">3 cuotas de Gs. 1.000.000 c/u, vencen a 30/60/90 días</div>
+        <div class="result">✓ VERIFICADO</div>
+      </div>
+      <div class="test-card">
+        <h4 style="color:#60a5fa;"><span style="display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:4px; background:rgba(96,165,250,0.08); font-size:0.5rem;">IR</span> Crédito Irregular</h4>
+        <div class="step-label">FLUJO</div>
+        <div class="step-text">Crédito → "45/75 días" → Ingresar total → Registrar</div>
+        <div class="step-label">RESULTADO</div>
+        <div class="step-text">2 cuotas: 45% a 45 días, 55% a 75 días</div>
+        <div class="result">✓ VERIFICADO</div>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="two-col">
+      <div class="arch-box">
+        <h4>🧪 Pruebas realizadas</h4>
+        <ul>
+          <li><strong style="color:#fbbf24;">Unitarias:</strong> Prorrateo con TRUNCATE, verificación saldo cero</li>
+          <li><strong style="color:#fbbf24;">Integración:</strong> Frontend React + Trigger PostgreSQL</li>
+          <li><strong style="color:#fbbf24;">Reglas de negocio:</strong> Rechazo tipo doc/plazo incompatible</li>
+          <li><strong style="color:#fbbf24;">Errores:</strong> Banner "Transacción Rechazada" con detalle SQL</li>
+          <li><strong style="color:#fbbf24;">Modo offline:</strong> Fallback a localStorage sin pérdida de datos</li>
+        </ul>
+      </div>
+      <div class="arch-box">
+        <h4>✅ Resultados de validación</h4>
+        <div class="result-row"><span>Coincidencia total factura vs Σ cuotas</span><span>100%</span></div>
+        <div class="result-row"><span>Casos de prueba ejecutados</span><span>3/3</span></div>
+        <div class="result-row"><span>Validación integridad referencial</span><span>OK</span></div>
+        <div class="result-row"><span>Rendimiento previsualización</span><span>&lt; 1.5s</span></div>
+        <div class="result-row"><span>Cobertura requerimientos (RF + RNF)</span><span>8/8</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">06 <strong>/ 07</strong></div>
+</section>
+
+<!-- 7: CLOSING -->
+<section class="slide slide-final" id="final">
+  <div class="particles">
+    <div class="particle" style="top:30%;left:20%;animation-delay:1s;width:4px;height:4px;"></div>
+    <div class="particle" style="top:60%;left:75%;animation-delay:4s;width:3px;height:3px;"></div>
+    <div class="particle" style="top:15%;left:85%;animation-delay:8s;width:3px;height:3px;"></div>
+    <div class="particle" style="top:80%;left:15%;animation-delay:12s;width:4px;height:4px;"></div>
+  </div>
+  <div class="badge">Gracias</div>
+  <h2>GQG System</h2>
+  <div class="cover-line" style="width:100px;height:3px;"></div>
+  <p class="sub">Parametrización de Vencimientos de Cuotas<br>Regulares e Irregulares</p>
+  <p style="color:#64748b; font-size:0.6rem; line-height:1.4;">
+    Facultad Politécnica — Universidad Nacional de Asunción<br>
+    Licenciatura en Ciencias Informáticas — Análisis de Sistemas Informáticos
+  </p>
+  <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:0.5rem; width:100%; max-width:600px;">
+    <div style="text-align:center; padding:0.45rem 0.3rem; border-radius:10px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08);">
+      <div style="font-size:0.45rem; color:#475569; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.1rem;">Jefe Proyecto</div>
+      <div style="font-weight:700; font-size:0.7rem; color:#32ff7e;">Carlos Benitez</div>
+    </div>
+    <div style="text-align:center; padding:0.45rem 0.3rem; border-radius:10px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08);">
+      <div style="font-size:0.45rem; color:#475569; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.1rem;">Frontend</div>
+      <div style="font-weight:700; font-size:0.7rem; color:#60a5fa;">Alejandro Acosta</div>
+    </div>
+    <div style="text-align:center; padding:0.45rem 0.3rem; border-radius:10px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08);">
+      <div style="font-size:0.45rem; color:#475569; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.1rem;">Backend</div>
+      <div style="font-weight:700; font-size:0.7rem; color:#f472b6;">Silvia Barrientos</div>
+    </div>
+    <div style="text-align:center; padding:0.45rem 0.3rem; border-radius:10px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08);">
+      <div style="font-size:0.45rem; color:#475569; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.1rem;">Tester</div>
+      <div style="font-weight:700; font-size:0.7rem; color:#fbbf24;">Luis Godoy</div>
+    </div>
+  </div>
+  <div style="display:flex; gap:0.5rem;">
+    <a href="http://localhost:5173/" target="_blank" class="btn-link" style="font-size:0.6rem; padding:0.4rem 1.2rem;">🌐 localhost:5173</a>
+    <a href="#cover" class="btn-link" style="font-size:0.6rem; padding:0.4rem 1.2rem;">↑ Inicio</a>
+  </div>
+  <div class="slide-number">07 <strong>/ 07</strong></div>
+</section>
+
+<script>
+// Font loading
+document.fonts.ready.then(() => {
+  document.body.style.fontFamily = "'Inter', -apple-system, system-ui, sans-serif";
+});
+
+// Lightbox
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+// Progress bar + active nav
+const slides = document.querySelectorAll('.slide');
+const navLinks = document.querySelectorAll('.nav-bar a');
+
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  document.getElementById('progressBar').style.width = progress + '%';
+
+  let current = 0;
+  slides.forEach((slide, i) => {
+    const rect = slide.getBoundingClientRect();
+    if (rect.top <= window.innerHeight * 0.3) current = i;
+  });
+  navLinks.forEach((link, i) => {
+    link.classList.toggle('active', i === current);
+  });
+}
+
+window.addEventListener('scroll', updateProgress);
+window.addEventListener('resize', updateProgress);
+updateProgress();
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  const targets = ['#cover', '#team', '#sistema', '#frontend', '#backend', '#testing', '#final'];
+  const current = targets.findIndex(s => {
+    const el = document.querySelector(s);
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    return rect.top <= window.innerHeight * 0.3 && rect.bottom > 0;
+  });
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    if (current < targets.length - 1) document.querySelector(targets[current + 1]).scrollIntoView({ behavior: 'smooth' });
+  }
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    if (current > 0) document.querySelector(targets[current - 1]).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+</script>
+
+</body>
+</html>
