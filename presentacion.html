@@ -648,7 +648,6 @@
           <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">PLAZO_DETALLES</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">cuota, dias</div><div class="td">porcentaje</div></div>
           <div class="tbl"><div class="th" style="background:#1a1a2e;color:#e2e8f0;">TIPOS_DOC</div><div class="td" style="color:#fbbf24;">PK id</div><div class="td">codigo CO/CR</div></div>
         </div>
-        <div style="color:#475569; text-align:center; margin-top:0.15rem;">CLIENTES → VENTAS → CUENTAS_COBRAR · PROVEEDORES → COMPRAS → CUENTAS_PAGAR · PLAZOS → PLAZO_DETALLES</div>
       </div>
       <div class="arch-box">
         <h4>⚡ Motor de Cuotas <code style="color:#ff0080;">calcularCuotasPreview</code></h4>
@@ -669,11 +668,6 @@
   <span class="cm">// 3. Suma siempre = total exacto (sin decimal perdido)</span>
   <span class="kw">return</span> cuotas;
 }</div>
-        <div style="margin-top:0.2rem; display:flex; gap:0.2rem; flex-wrap:wrap;">
-          <span style="padding:0.06rem 0.35rem; border-radius:100px; background:rgba(50,255,126,0.05); border:1px solid rgba(50,255,126,0.1); color:#32ff7e;">✓ Lógica compartida ventas + compras</span>
-          <span style="padding:0.06rem 0.35rem; border-radius:100px; background:rgba(255,0,128,0.05); border:1px solid rgba(255,0,128,0.1); color:#ff0080;">✓ Math.round ×100/100 sin pérdida</span>
-          <span style="padding:0.06rem 0.35rem; border-radius:100px; background:rgba(96,165,250,0.05); border:1px solid rgba(96,165,250,0.1); color:#60a5fa;">✓ Regular (30/60/90) e irregular (días variables)</span>
-          <span style="padding:0.06rem 0.35rem; border-radius:100px; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.1); color:#fbbf24;">✓ Previsualización antes de confirmar</span>
         </div>
       </div>
     </div>
